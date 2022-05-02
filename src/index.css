@@ -11,3 +11,29 @@ code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
 }
+
+.php-email-form {
+  box-shadow: 3px 2px 20px 10px #f4f1f180;
+  padding: 30px;
+}
+
+.appointment .php-email-form {
+  width: 100%;
+}
+
+.buttonss {
+  margin-top: 15px;
+}
+
+button {
+  background-color: #ff6337;
+  border: none;
+  padding: 10px 35px;
+  color: white;
+  border-radius: 50px;
+  margin-left: 10px;
+}
+
+button:hover {
+  background: #1c84e3;
+}
