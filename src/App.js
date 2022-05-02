@@ -8,7 +8,7 @@ import appointment from './container/appointment/appointment';
 import Home from './container/Home';
 import contact from './container/contact/contact';
 import About from './container/About/About';
-import Auth from './container/Auth';
+import Login from './container/Login';
 
 function App() {
   return (
@@ -21,7 +21,7 @@ function App() {
         <Route exact path={"/appointment"} component={appointment} />
         <Route exact path={"/contact"} component={contact} />
         <Route exact path={"/About"} component={About} />
-        <Route exact path={"/Auth"} component={Auth} />
+        <Route exact path={"/Login"} component={Login} />
        </Switch>
       <Footer />
     </div>

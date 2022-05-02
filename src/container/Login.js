@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 
-function Auth(props) {
+function Login(props) {
     const [userType, setUserType] = useState('Login')
     const [reset, setReset] = useState(false)
 
@@ -15,15 +16,15 @@ function Auth(props) {
         <section id="appointment" className="appointment d-flex">
             <div className="container">
                 <div className='section-title'>
-                    {   
-                        reset ?
-                        <h2>Forget Password</h2> :
-                        userType === 'Login' ? <h2>Login</h2> : <h2>Signup</h2> 
+                    {
+                        reset === true ?
+                            <h2>Forget Password</h2> :
+                            userType === 'Login' ? <h2>Login</h2> : <h2>Signup</h2>
                     }
                 </div>
                 <div className='php-email-form'>
                     <div className='row align-items-center justify-content-center'>
-                        {   
+                        {
                             userType === 'Login' ? null
                                 :
                                 <div className="col-md-7 form-group">
@@ -46,12 +47,16 @@ function Auth(props) {
                                 </div>
                                 :
                                 <div className='text-center'>
-                                    <span>Already have Account</span><button onClick={() => setReset('Login')}>Signup</button>
+                                    <span>Already have Account</span><button onClick={() => setUserType('Login')}>Signup</button>
                                 </div>
-                                
+
+                        }
+                        {
+                            userType === "Signup" ? null :
+                            <NavLink to="/forgetPassword" className="forget">Forgot password?</NavLink>
                         }
 
-                        <div className="text-center buttonss"><button onClick={()=>setUserType('Login')}>Reset Password</button></div>
+                        <div className="text-center buttonss"><button>Make appointment</button></div>
                         <div>
                         </div>
                     </div>
@@ -61,4 +66,4 @@ function Auth(props) {
     );
 }
 
-export default Auth;
+export default Login;
