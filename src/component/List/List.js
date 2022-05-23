@@ -11,8 +11,8 @@ function List({ data }) {
     return (
         data.map((d, i) => {
             return (
-                <div>
-                    <div key={i} className='col-3 mt-5'>
+                <div className='col-3 col-md-6 mt-5'>
+                    <div key={i}>
                     <Card>
                         <CardBody>
                             <CardTitle>{d.name}</CardTitle>
