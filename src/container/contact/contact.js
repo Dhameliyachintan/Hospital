@@ -1,6 +1,6 @@
 import React from 'react';
 
-function contact(props) {
+function Contact(props) {
     return (
         <section id="contact" className="contact">
             <div className="container">
@@ -63,4 +63,4 @@ function contact(props) {
     );
 }
 
-export default contact;
+export default Contact;
