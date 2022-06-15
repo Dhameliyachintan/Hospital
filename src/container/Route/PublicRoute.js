@@ -7,7 +7,7 @@ export default function PublicRoute({ component: Component, restricted = false, 
     return (
         <Route{...rest} render={props => (
             isLogin() && restricted ?
-                <Redirect to={"/About"} />
+                <Redirect to={"/"} />
                 :
                 <Component {...props} />
         )}
