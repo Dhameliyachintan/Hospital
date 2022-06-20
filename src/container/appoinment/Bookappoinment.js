@@ -3,6 +3,7 @@ import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
+import Inputbox from '../Inputbox/Inputbox';
 
 function Bookappoinment(props) {
     const history = useHistory()
@@ -10,31 +11,12 @@ function Bookappoinment(props) {
     let schema = yup.object().shape({
         name: yup.string().required("please enter name"),
         email: yup.string().required('enter email').email('enter valid email'),
-        phone: yup.number().min(10).required("please enter number"),
+        phone: yup.number().min(10).required("please enter phone"),
         date: yup.date().required("please enter date"),
+        department: yup.date().required("please select department"),
         message: yup.string().required("please enter message")
     });
 
-
-    const handleSubmit = (values) => {
-        const data = JSON.parse(localStorage.getItem("users"));
-
-        console.log(data);
-
-        if (data === null) {
-            localStorage.setItem("users", JSON.stringify([values]));
-        } else {
-            data.push(values);
-            localStorage.setItem("users", JSON.stringify(data));
-        }
-
-        history.push("/listappointment");
-    }
-
-
-    // const handleClick = () => {
-
-    // }
 
     const formik = useFormik({
         initialValues: {
@@ -42,15 +24,31 @@ function Bookappoinment(props) {
             email: '',
             phone: '',
             date: '',
+            department: '',
             message: ''
         },
         validationSchema: schema,
         onSubmit: values => {
-            handleSubmit(values)
+            const data = JSON.parse(localStorage.getItem("users"));
+
+            console.log(data);
+
+            if (data === null) {
+                localStorage.setItem("users", JSON.stringify([values]));
+            } else {
+                data.push(values);
+                localStorage.setItem("users", JSON.stringify(data));
+            }
+            
+            history.push("/listappointment");
             // alert(JSON.stringify(values, null, 2));
         },
     });
 
+    const  { handleSubmit, errors, handleChange,touched, handleBlur  } = formik;
+
+    // console.log(formik.errors);
+    // console.log(errors);
 
     // console.log(formik.errors);
     return (
@@ -70,106 +68,94 @@ function Bookappoinment(props) {
                         <NavLink to={"/listappointment"}>Listappoinment</NavLink>
                     </div>
                 </div>
-                <Formik value={formik}>
-                    <Form onSubmit={formik.handleSubmit} action method="post" role="form" className="php-email-form">
+                <Formik values={formik}>
+                    <Form onSubmit={handleSubmit} className="php-email-form">
                         <div className="row">
                             <div className="col-md-4 form-group">
-                                <input
-                                    type="text"
+                                <Inputbox
+                                    type="name"
                                     name="name"
                                     className="form-control"
                                     id="name"
                                     placeholder="Your Name"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.name}
-                                    onBlur={formik.handleBlur}
+                                    errors={Boolean(errors.name && touched.name)}
+                                    errorMessages={errors.name}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
                                 />
-                                {
-                                    formik.errors.name && formik.touched.name ? <p>{formik.errors.name}</p> : ''
-                                }
-                                <div className="validate" />
                             </div>
                             <div className="col-md-4 form-group mt-3 mt-md-0">
-                                <input
+                                <Inputbox
                                     type="email"
                                     className="form-control"
                                     name="email"
                                     id="email"
                                     placeholder="Your Email"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.email}
-                                    onBlur={formik.handleBlur}
-                                />
-                                {
-                                    formik.errors.email && formik.touched.email ? <p>{formik.errors.email}</p> : ''
-                                }
-                                <div className="validate" />
+                                    errors={Boolean(errors.email && touched.email)}
+                                    errorMessages={errors.email}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                     />
                             </div>
                             <div className="col-md-4 form-group mt-3 mt-md-0">
-                                <input
+                                <Inputbox
                                     type="tel"
                                     className="form-control"
                                     name="phone"
                                     id="phone"
+                                    maxLength={10}
                                     placeholder="Your Phone"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.phone}
-                                    onBlur={formik.handleBlur}
-                                />
-                                {
-                                    formik.errors.phone && formik.touched.phone ? <p>{formik.errors.phone}</p> : ''
-                                }
-                                <div className="validate" />
+                                    errors={Boolean(errors.phone && touched.phone)}
+                                    errorMessages={errors.phone}
+                                    onChange={handleChange}
+                                    onBlur={handleBlur}
+                                    />
                             </div>
                         </div>
                         <div className="row">
                             <div className="col-md-4 form-group mt-3">
-                                <input
+                                <Inputbox
                                     type="date"
                                     name="date"
-                                    className="form-control datepicker"
+                                    className="form-control datapicker"
                                     id="date"
                                     placeholder="Appointment Date"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.date}
-                                    onBlur={formik.handleBlur}
-                                />
-                                {
-                                    formik.errors.date && formik.touched.date ? <p>{formik.errors.date}</p> : ''
-                                }
-                                <div className="validate" />
+                                    errors={Boolean(errors.date && touched.date)}
+                                    errorMessages={errors.date}
+                                    onChange={handleChange} 
+                                    onBlur={handleBlur}
+                                   
+                                    />
                             </div>
                             <div className="col-md-4 form-group mt-3">
-                                <select name="department" id="department" className="form-select">
-                                    <option value>Select Department</option>
+                                <Inputbox type="select"name="department" id="department" className="form-select" onChange={handleChange}
+                                    errors={Boolean(errors.department && touched.department)} errorMessages={errors.department} onBlur={handleBlur}>
+                                    <option disabled selected>Select Department</option>
                                     <option value="Department 1">Department 1</option>
                                     <option value="Department 2">Department 2</option>
                                     <option value="Department 3">Department 3</option>
-                                </select>
-                                <div className="validate" />
+                                </Inputbox>
                             </div>
                         </div>
                         <div className="form-group mt-3">
-                            <textarea className="form-control"
-                                name="message"
-                                rows={5}
+                            <Inputbox
+                            type='textarea'
+                                className="form-control"
+                                name="message" rows={5}
                                 placeholder="Message (Optional)"
                                 defaultValue={""}
-                                onChange={formik.handleChange}
-                                value={formik.values.message}
-                                onBlur={formik.handleBlur}
-                            />
-                            {
-                                formik.errors.message && formik.touched.message ? <p>{formik.errors.message}</p> : ''
-                            }
-                            <div className="validate" />
+                                errors={Boolean(errors.message && touched.message)}
+                                errorMessages={errors.message}
+                                onChange={handleChange}
+                                onBlur={handleBlur}
+                                 />
                         </div>
                         <div className="mb-3">
                             <div className="loading">Loading</div>
                             <div className="error-message" />
                             <div className="sent-message">Your appointment request has been sent successfully. Thank you!</div>
                         </div>
-                        <div className="text-center"><button type="submit">Make an Appointment</button></div>
+                        <div className="text-center"><button type="submit">Submit</button></div>
                     </Form>
                 </Formik>
             </div>

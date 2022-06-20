@@ -1,10 +1,7 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 function Listappoinment(props) {
-    // let localData = JSON.parse(localStorage.getItem("users"))
-
-    // console.log(localData);
 
     return (
         <section id="appointment" className="appointment">
@@ -20,7 +17,7 @@ function Listappoinment(props) {
                         <NavLink to={"/bookappointment"}>Bookappoinment</NavLink>
                     </div>
                     <div className="col-6">
-                        <NavLink  to={"/listappointment"}>Listappoinment</NavLink>
+                        <NavLink to={"/listappointment"}>Listappoinment</NavLink>
                     </div>
                 </div>
             </div>
