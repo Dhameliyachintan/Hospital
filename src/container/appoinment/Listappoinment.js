@@ -1,7 +1,18 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 
 function Listappoinment(props) {
+    const [data, setData] = useState([])
+
+    const loaddata = () => {
+        const localdata = JSON.parse(localStorage.getItem("Bookappoinment"));
+        // console.log(localdata);
+        setData(localdata)
+    }
+
+    useEffect(() => {   
+        loaddata()
+    })
 
     return (
         <section id="appointment" className="appointment">
@@ -19,6 +30,21 @@ function Listappoinment(props) {
                     <div className="col-6">
                         <NavLink to={"/listappointment"}>Listappoinment</NavLink>
                     </div>
+                </div>
+                <div>
+                    {
+                        data.map((d,i) => {
+                            return (
+                                <>
+                                <h2>{d.name}</h2>
+                                <h2>{d.date}</h2>
+                                <h2>{d.phone}</h2>
+                                <h2>{d.department}</h2>
+                                <h2>{d.message}</h2>
+                                </>
+                            )
+                        })
+                    }
                 </div>
             </div>
         </section>

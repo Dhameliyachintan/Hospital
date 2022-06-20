@@ -13,7 +13,7 @@ function Bookappoinment(props) {
         email: yup.string().required('enter email').email('enter valid email'),
         phone: yup.number().min(10).required("please enter phone"),
         date: yup.date().required("please enter date"),
-        department: yup.date().required("please select department"),
+        department: yup.string  ().required("please select department"),
         message: yup.string().required("please enter message")
     });
 
@@ -29,28 +29,29 @@ function Bookappoinment(props) {
         },
         validationSchema: schema,
         onSubmit: values => {
-            const data = JSON.parse(localStorage.getItem("users"));
+            const data = JSON.parse(localStorage.getItem("Bookappoinment"));
 
             console.log(data);
 
             if (data === null) {
-                localStorage.setItem("users", JSON.stringify([values]));
+                localStorage.setItem("Bookappoinment", JSON.stringify([values]));
             } else {
                 data.push(values);
-                localStorage.setItem("users", JSON.stringify(data));
+                localStorage.setItem("Bookappoinment", JSON.stringify(data));
             }
-            
+
             history.push("/listappointment");
             // alert(JSON.stringify(values, null, 2));
         },
     });
 
-    const  { handleSubmit, errors, handleChange,touched, handleBlur  } = formik;
+    const { handleSubmit, errors, handleChange, touched, handleBlur } = formik;
 
     // console.log(formik.errors);
     // console.log(errors);
 
     // console.log(formik.errors);
+    
     return (
         <section id="appointment" className="appointment">
             <div className="container">
@@ -68,6 +69,7 @@ function Bookappoinment(props) {
                         <NavLink to={"/listappointment"}>Listappoinment</NavLink>
                     </div>
                 </div>
+               
                 <Formik values={formik}>
                     <Form onSubmit={handleSubmit} className="php-email-form">
                         <div className="row">
@@ -95,7 +97,7 @@ function Bookappoinment(props) {
                                     errorMessages={errors.email}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                     />
+                                />
                             </div>
                             <div className="col-md-4 form-group mt-3 mt-md-0">
                                 <Inputbox
@@ -109,7 +111,7 @@ function Bookappoinment(props) {
                                     errorMessages={errors.phone}
                                     onChange={handleChange}
                                     onBlur={handleBlur}
-                                    />
+                                />
                             </div>
                         </div>
                         <div className="row">
@@ -122,13 +124,13 @@ function Bookappoinment(props) {
                                     placeholder="Appointment Date"
                                     errors={Boolean(errors.date && touched.date)}
                                     errorMessages={errors.date}
-                                    onChange={handleChange} 
+                                    onChange={handleChange}
                                     onBlur={handleBlur}
-                                   
-                                    />
+
+                                />
                             </div>
                             <div className="col-md-4 form-group mt-3">
-                                <Inputbox type="select"name="department" id="department" className="form-select" onChange={handleChange}
+                                <Inputbox type="select" name="department" id="department" className="form-select" onChange={handleChange}
                                     errors={Boolean(errors.department && touched.department)} errorMessages={errors.department} onBlur={handleBlur}>
                                     <option disabled selected>Select Department</option>
                                     <option value="Department 1">Department 1</option>
@@ -139,7 +141,7 @@ function Bookappoinment(props) {
                         </div>
                         <div className="form-group mt-3">
                             <Inputbox
-                            type='textarea'
+                                type='textarea'
                                 className="form-control"
                                 name="message" rows={5}
                                 placeholder="Message (Optional)"
@@ -148,7 +150,7 @@ function Bookappoinment(props) {
                                 errorMessages={errors.message}
                                 onChange={handleChange}
                                 onBlur={handleBlur}
-                                 />
+                            />
                         </div>
                         <div className="mb-3">
                             <div className="loading">Loading</div>
