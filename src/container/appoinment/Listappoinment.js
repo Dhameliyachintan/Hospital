@@ -9,12 +9,19 @@ import Button from '@mui/material/Button';
 import { Dialog } from '@mui/material';
 import IconButton from '@mui/material/IconButton';
 import DeleteIcon from '@mui/icons-material/Delete';
+import EditLocationIcon from '@mui/icons-material/EditLocation';
+import { useHistory } from 'react-router-dom';
 
 
 
 function Listappoinment(props) {
+    const history = useHistory()
+
     const [data, setData] = useState([])
     const [open, setOpen] = useState(false);
+    const [Dopen, setDopen] = useState();
+    // const [uid, setUid] = useState();
+    const [did, setDid] = useState()
 
     const loaddata = () => {
         const localdata = JSON.parse(localStorage.getItem("Bookappoinment"));
@@ -30,17 +37,24 @@ function Listappoinment(props) {
 
     const handleClose = () => {
         setOpen(false)
+        setDopen(false)
     }
 
-    const handleDelete = (id) => {
+    const handleClickDopen = (id) => {
+        setDid(id)
+        setDopen(true)
+
+    }
+
+    const handleDelete = () => {
         let localData = JSON.parse(localStorage.getItem("Bookappoinment"))
 
-        let filterData = localData.filter((v, i) => v.id !== id);
+        let filterData = localData.filter((v, i) => v.id !== did);
         console.log(filterData);
-        console.log(id);
-        
+
         localStorage.setItem("Bookappoinment", JSON.stringify(filterData))
         loaddata()
+        setDopen(false)
     }
 
 
@@ -56,14 +70,26 @@ function Listappoinment(props) {
         {
             field: 'delete', headerName: 'Delete', width: 130,
             renderCell: (params) => (
-                <>
-                    <IconButton aria-label="delete" onClick={() => handleDelete(params.row.id)}>
-                        <DeleteIcon />
-                    </IconButton>
-                </>
+                <IconButton aria-label="delete" onClick={() => handleClickDopen(params.row.id)}>
+                    <DeleteIcon />
+                </IconButton>
+            )
+        },
+        {
+            field: 'edit', headerName: 'edit', width: 130,
+            renderCell: (params) => (
+                <IconButton aria-label="edit" onClick={() => handleEdit(params.row)}>
+                    <EditLocationIcon />
+                </IconButton>
             )
         },
     ];
+
+    const handleEdit = () => [
+
+        history.push("/bookappointment")
+
+    ]
 
 
 
@@ -115,7 +141,7 @@ function Listappoinment(props) {
                     </div>
 
                     <Dialog
-                        open={open}
+                        open={Dopen}
                         onClose={handleClose}
                         aria-labelledby="alert-dialog-title"
                         aria-describedby="alert-dialog-description"
@@ -125,14 +151,14 @@ function Listappoinment(props) {
                         </DialogTitle>
                         <DialogContent>
                             <DialogContentText id="alert-dialog-description">
-                                Let Google help apps determine location. This means sending anonymous
-                                location data to Google, even when no apps are running.
+                            bookappointment 
+                                
                             </DialogContentText>
                         </DialogContent>
                         <DialogActions>
-                            <Button onClick={handleClose}>Disagree</Button>
-                            <Button onClick={handleClose} autoFocus>
-                                Agree
+                            <Button onClick={() => handleDelete()} autofocus>yes</Button>
+                            <Button onClick={handleClose}>
+                                No
                             </Button>
                         </DialogActions>
                     </Dialog>
