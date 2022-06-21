@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import * as yup from 'yup';
 import { Form, Formik, useFormik } from 'formik';
 import { NavLink } from 'react-router-dom';
 import { useHistory } from 'react-router-dom';
 import Inputbox from '../Inputbox/Inputbox';
+
 
 function Bookappoinment(props) {
     const history = useHistory()
@@ -13,13 +14,14 @@ function Bookappoinment(props) {
         email: yup.string().required('enter email').email('enter valid email'),
         phone: yup.number().min(10).required("please enter phone"),
         date: yup.date().required("please enter date"),
-        department: yup.string  ().required("please select department"),
+        department: yup.string().required("please select department"),
         message: yup.string().required("please enter message")
     });
 
 
     const formik = useFormik({
         initialValues: {
+            id: Math.floor(Math.random()* 1000),
             name: '',
             email: '',
             phone: '',
@@ -45,13 +47,11 @@ function Bookappoinment(props) {
         },
     });
 
-    const { handleSubmit, errors, handleChange, touched, handleBlur } = formik;
+    const { handleSubmit, errors, handleChange, touched, handleBlur, } = formik;
 
-    // console.log(formik.errors);
-    // console.log(errors);
-
-    // console.log(formik.errors);
     
+
+
     return (
         <section id="appointment" className="appointment">
             <div className="container">
@@ -69,7 +69,6 @@ function Bookappoinment(props) {
                         <NavLink to={"/listappointment"}>Listappoinment</NavLink>
                     </div>
                 </div>
-               
                 <Formik values={formik}>
                     <Form onSubmit={handleSubmit} className="php-email-form">
                         <div className="row">
