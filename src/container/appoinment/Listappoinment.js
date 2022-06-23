@@ -14,14 +14,13 @@ import { useHistory } from 'react-router-dom';
 
 
 
+
 function Listappoinment(props) {
     const history = useHistory()
 
     const [data, setData] = useState([])
-    const [open, setOpen] = useState(false);
-    const [Dopen, setDopen] = useState();
-    // const [uid, setUid] = useState();
-    const [did, setDid] = useState()
+    // const [Dopen, setDopen] = useState();
+    // const [did, setDid] = useState()
 
     const loaddata = () => {
         const localdata = JSON.parse(localStorage.getItem("Bookappoinment"));
@@ -36,25 +35,24 @@ function Listappoinment(props) {
 
 
     const handleClose = () => {
-        setOpen(false)
-        setDopen(false)
+        // setDopen(false)
     }
 
-    const handleClickDopen = (id) => {
-        setDid(id)
-        setDopen(true)
+    // const handleClickDopen = (id) => {
+    //     setDid(id)
+    //     setDopen(true)
 
-    }
+    // }
 
-    const handleDelete = () => {
+    const handleDelete = (id) => {
         let localData = JSON.parse(localStorage.getItem("Bookappoinment"))
 
-        let filterData = localData.filter((v, i) => v.id !== did);
+        let filterData = localData.filter((v, i) => v.id !== id);
         console.log(filterData);
 
         localStorage.setItem("Bookappoinment", JSON.stringify(filterData))
         loaddata()
-        setDopen(false)
+        // setDopen(false)
     }
 
 
@@ -70,7 +68,7 @@ function Listappoinment(props) {
         {
             field: 'delete', headerName: 'Delete', width: 130,
             renderCell: (params) => (
-                <IconButton aria-label="delete" onClick={() => handleClickDopen(params.row.id)}>
+                <IconButton aria-label="delete" onClick={() => handleDelete(params.row.id)}>
                     <DeleteIcon />
                 </IconButton>
             )
@@ -78,18 +76,19 @@ function Listappoinment(props) {
         {
             field: 'edit', headerName: 'edit', width: 130,
             renderCell: (params) => (
-                <IconButton aria-label="edit" onClick={() => handleEdit(params.row)}>
+                <IconButton aria-label="edit" onClick={() => handleEdit(params.id)}>
                     <EditLocationIcon />
                 </IconButton>
             )
         },
     ];
 
-    const handleEdit = () => [
+    const handleEdit = (id) => {
+        history.push("/bookappointment", {"id": id});
+        console.log(id);
+    }
 
-        history.push("/bookappointment")
-
-    ]
+    
 
 
 
@@ -140,7 +139,7 @@ function Listappoinment(props) {
                         />
                     </div>
 
-                    <Dialog
+                    {/* <Dialog
                         open={Dopen}
                         onClose={handleClose}
                         aria-labelledby="alert-dialog-title"
@@ -161,7 +160,7 @@ function Listappoinment(props) {
                                 No
                             </Button>
                         </DialogActions>
-                    </Dialog>
+                    </Dialog> */}
                 </div>
             </section>
         </>
@@ -170,3 +169,116 @@ function Listappoinment(props) {
 }
 
 export default Listappoinment;
+
+// import React, { useEffect, useState } from 'react';
+// import { NavLink, useHistory } from 'react-router-dom';
+// import { DataGrid } from '@mui/x-data-grid';
+// import DeleteIcon from '@mui/icons-material/Delete';
+// import Button from '@mui/material/Button';
+// import IconButton from '@mui/material/IconButton';
+// import ModeEditIcon from '@mui/icons-material/ModeEdit';
+
+
+// function Listappoinment(props) {
+
+//   const history = useHistory();
+
+//   const [data , setData]= useState([]);
+
+//   const showData = () => {
+//    let listData = JSON.parse(localStorage.getItem("bookappoinment"));
+
+//    if (listData !== null) {
+//     setData(listData);
+//   }
+
+//   }
+
+//   const handleDelete =(id) =>{
+    
+//     let dData = JSON.parse(localStorage.getItem("bookappoinment"));
+
+
+//     let filterdata = dData.filter((d, i) => d.id !== id);
+
+//     localStorage.setItem("bookappoinment" , JSON.stringify(filterdata))
+
+//     showData();
+//   }
+
+//   const handleEdit =(id) =>{
+//     history.push("/bookappointment", {"id" : id})
+//     console.log(id);
+//   }
+
+//   useEffect(
+//     () =>{
+//       showData()
+//   },
+//   [])
+
+
+//   const columns = [
+//     { field: 'id', headerName: 'Id', width: 70 },
+//     { field: 'name', headerName: 'Name', width: 130 },
+//     { field: 'email', headerName: 'Email', width: 130 },
+//     { field: 'phone', headerName: 'Phone', width: 130 },
+//     { field: 'date', headerName: 'Date', width: 130 },
+//     { field: 'department', headerName: 'Department', width: 130 },
+//     { field: 'message', headerName: 'Message', width: 130 },
+//     { field: 'action',
+//      headerName: 'Action', 
+//      width: 130,
+//      renderCell: (params) => {
+//       return (
+//           <>
+//               <Button startIcon={<DeleteIcon />} onClick={() => handleDelete(params.id)}></Button>
+
+//               <IconButton aria-label="edit" onClick={()=>handleEdit(params.id)}><ModeEditIcon /></IconButton>
+
+//           </>
+//       )
+//   }
+    
+//     },
+  
+// ];
+
+
+//   return (
+//     <section id="appointment" className="appointment">
+//       <div className="container">
+//         <div className="section-title">
+//           <h2>Make an Appointment</h2>
+//           <p>Aenean enim orci, suscipit vitae sodales ac, semper in ex. Nunc aliquam eget nibh eu euismod. Donec dapibus
+//             blandit quam volutpat sollicitudin. Fusce tincidunt sit amet ex in volutpat. Donec lacinia finibus tortor.
+//             Curabitur luctus eleifend odio. Phasellus placerat mi et suscipit pulvinar.</p>
+//         </div>
+//         <div className='appoinmentnav'>
+//             <div className='row text-center'>
+//               <div className='col-6 mb-5'>
+//                 <NavLink activeClassName='title-border' to={"/bookappointment"}>Book Appoinment</NavLink>
+//               </div>
+//               <div className='col-6 mb-5'>
+//                 <NavLink activeClassName='title-border' to={"/listappointment"}>List Appoinment</NavLink>
+//               </div>
+//             </div>
+
+//           </div>
+//         <div style={{ height: 400, width: '100%' }}>
+//                 <DataGrid
+//                     rows={data}
+//                     columns={columns}
+//                     pageSize={5}
+//                     rowsPerPageOptions={[5]}
+//                     checkboxSelection
+//                 />
+//             </div>
+ 
+
+//       </div>
+//     </section>
+//   );
+// }
+
+// export default Listappoinment;

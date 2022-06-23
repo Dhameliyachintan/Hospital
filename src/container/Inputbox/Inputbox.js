@@ -1,7 +1,7 @@
 import React from 'react';
 import { FormfeedStyle, InputBoxStyle } from './Inputboxstyle';
 
-function Inputbox({children, errors=false, errorMessages= '', ...rest}) {
+function Inputbox({children,errors=false, errorMessages= '', ...rest}) {
     return (
         <>
         <InputBoxStyle {...rest}>
