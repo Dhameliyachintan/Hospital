@@ -87,8 +87,7 @@ function Bookappoinment(props) {
       if (localdata !== null && props.location.state) {
 
         let filterdata = localdata.filter((d) => d.id === props.location.state.id);
-        
-        // console.log(filterdata);
+        console.log(filterdata)
         formik.setValues(filterdata[0])
         setUpdate(true);
         }

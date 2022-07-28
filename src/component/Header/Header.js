@@ -1,10 +1,15 @@
-import React from 'react';
+import { Switch } from '@mui/material';
+import React, { useContext } from 'react';
 import { NavLink } from 'react-router-dom';
+import ThemeContext from '../../context/ThemeContext';
 
 function Header(props) {
+  const theme = useContext(ThemeContext)
+  console.log(theme);
+
   return (
     <div className="main-header">
-      <div id="topbar" className="d-flex align-items-center fixed-top">
+      <div id="topbar" className={`d-flex align-items-center fixed-top ${theme.theme}`}>
         <div className="container d-flex justify-content-between">
           <div className="contact-info d-flex align-items-center">
             <i className="bi bi-envelope" /> <a href="mailto:contact@example.com">cityhospital@example.com</a>
@@ -64,6 +69,8 @@ function Header(props) {
             </ul>
             <i className="bi bi-list mobile-nav-toggle" />
           </nav>
+
+          <Switch onClick={() => theme.toggle_theme(theme.theme)}>change</Switch>
           <NavLink exact to={"/Bookappointment"} className="appointment-btn scrollto"><span className="d-none d-md-inline">Make an</span>
             Bookappointment</NavLink>
           <NavLink exact to="/Login" className="appointment-btn scrollto">

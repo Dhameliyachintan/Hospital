@@ -39,7 +39,7 @@ function Login(props) {
         password: yup.string().required('please enter password'),
     }
 
-    let Signup = {
+    let  Signup    = {
         name: yup.string().required('please enter name'),
         email: yup.string().required('enter email').email('enter valid email'),
         password: yup.string().required('please enter password'),
